@@ -12,9 +12,17 @@ const smallCompWord = 'comp'.fontsize(3).sup()
 
 function convertToWord(letter) {
     switch (letter) {
-        case 'r': return 'Rock'
-        case 's': return 'Scissors'
-        case 'p': return 'Paper'
+        case 'r': return 'камень'
+        case 's': return 'ножницы'
+        case 'p': return 'бумага'
+    }
+}
+
+function createSentence(firstWord, secondWord) {
+    switch (firstWord+secondWord) {
+        case 'каменьножницы': return `Камень${smallUserWord} ломает Ножницы${smallCompWord}`
+        case 'ножницыбумага': return `Ножницы${smallUserWord} режут Бумагу${smallCompWord}`
+        case 'бумагакамень': return `Бумага${smallUserWord} оборачивает Камень${smallCompWord}`
     }
 }
 
@@ -27,8 +35,7 @@ function win(userChoice, computerChoice) {
     const userChoice_img = document.getElementById(userChoice);
     userScore++;
     userScore_span.innerText = `${userScore}`;
-    result_div.innerHTML =
-        `${convertToWord(userChoice)}${smallUserWord} beats ${convertToWord(computerChoice)}${smallCompWord} YOU WIN!`;
+    result_div.innerHTML = `${createSentence(convertToWord(userChoice), convertToWord(computerChoice))} ПОБЕДА!`
     userChoice_img.classList.add('choices__image_green-border');
     setTimeout(() => userChoice_img.classList.remove('choices__image_green-border'), 500)
 }
@@ -37,8 +44,7 @@ function lose(userChoice, computerChoice) {
     const userChoice_img = document.getElementById(userChoice);
     computerScore++;
     computerScore_span.innerText = `${computerScore}`
-    result_div.innerHTML =
-        `${convertToWord(computerChoice)}${smallCompWord} beats ${convertToWord(userChoice)}${smallUserWord} YOU LOSE!`;
+    result_div.innerHTML = `${createSentence(convertToWord(computerChoice), convertToWord(userChoice))} ПОРАЖЕНИЕ!`
 
     userChoice_img.classList.add('choices__image_red-border');
     setTimeout(() => userChoice_img.classList.remove('choices__image_red-border'), 500)
@@ -47,7 +53,7 @@ function lose(userChoice, computerChoice) {
 function draw(userChoice, computerChoice) {
     const userChoice_img = document.getElementById(userChoice);
     result_div.innerHTML =
-        `${convertToWord(computerChoice)}${smallUserWord} equals ${convertToWord(userChoice)}${smallCompWord}`;
+        `${convertToWord(computerChoice)}${smallUserWord} и ${convertToWord(userChoice)}${smallCompWord} НИЧЬЯ!`;
 
     userChoice_img.classList.add('choices__image_gray-border');
     setTimeout(() => userChoice_img.classList.remove('choices__image_gray-border'), 500)
